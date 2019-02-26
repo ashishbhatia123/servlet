@@ -1,0 +1,50 @@
+Servlet
+	--for java Developers
+	--Must give alias to servlet.
+	--implementation of HttpServlet
+	--in this we can calls to Servlet layer/Dao
+	--Apply transformation on data like Date 
+	--Not for designong presentataion . i.e HTML/Jsp page is made seperately
+	--so Redirect/Dispatch/Jump to jsp from Servlet
+
+
+
+JSP
+	--Receive the data from Servlet
+	--Design WebPage
+	--Populate data
+	--Apply Css
+	--Apply animation, dynamism
+	--Use jquery Library
+	Dont
+	--Must not integrate with Service layer/BL/Dao Layer
+	Must not have Bussiness Logic.
+
+how to go from servlet to jsp?
+	ways are :
+--hyperlink
+--redirect
+--dispatching
+	--hyperlink   --> java file Shown in address bar / JSP file shown in address bar
+	--redirect    --> JSP file shown in address bar + content of jsp file directly
+	--dispatching --> java file shown in address bar + content of jsp file directly
+
+
+
+1. Multiple Servlet- jsp
+2. Navigation
+3. Exposure of password prevented.
+4. Navigation ways 
+5. Collecting Query String or form Data
+6. Using RequestScope
+7. Sequring jsp's by keeping it in WEB-INF
+ 
+
+
+
+Home.java (d)-- Welcome.jsp
+--(h)getLoginpage (= =)Login.java
+--(d)Login.jsp (= =)loginForm
+-- <form action= authenticate> 
+authenticate (= =) Authentication .java 
+
