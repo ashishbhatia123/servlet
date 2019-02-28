@@ -22,16 +22,7 @@
 	Capgemini Solutions . 
 	<% }  %>
 	<%= x %> 
-	<%= getValue() %>
-	<%
-	config.getInitParameterNames(arg0)
-	application.getInitParameter(arg0);
-	request.getParameter(arg0);
-	session.getId()
-	
-	
-%>
-	
+	<%= getValue() %>	
 </body>
 </html>
 
@@ -58,7 +49,7 @@
  <%--
  	Implicit Tags 
  	variable that are ready in jsp.java file
- 		1. ServletContext : application
+ 		1. ServletConfig : application
  		2. ServletContext : context
  		3. HttpServletRequest :request
  		4. HttpServletResponse : response
@@ -71,7 +62,7 @@
 				<%-- <%@ page isErrorPage =true %> --%>
 		
  
- --%>
+
  
  
  
