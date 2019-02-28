@@ -1,0 +1,326 @@
+Servlet
+	--for java Developers
+	--Must give alias to servlet.
+	--implementation of HttpServlet
+	--in this we can calls to Servlet layer/Dao
+	--Apply transformation on data like Date 
+	--Not for designong presentataion . i.e HTML/Jsp page is made seperately
+	--so Redirect/Dispatch/Jump to jsp from Servlet
+
+
+
+JSP
+	--Receive the data from Servlet
+	--Design WebPage
+	--Populate data
+	--Apply Css
+	--Apply animation, dynamism
+	--Use jquery Library
+	Dont
+	--Must not integrate with Service layer/BL/Dao Layer
+	Must not have Bussiness Logic.
+
+how to go from servlet to jsp?
+	ways are :
+--hyperlink
+--redirect
+--dispatching
+	--hyperlink   --> java file Shown in address bar / JSP file shown in address bar
+	--redirect    --> JSP file shown in address bar + content of jsp file directly
+			-- redirection is possible every where but avoid using redirection 
+			-- for the project whic are belonging to same project .
+	--dispatching --> java file shown in address bar + content of jsp file directly
+			--dispatching within the project and the dispatcher belonging
+			-- to ---- can done dispatching within the same server. 
+
+
+1. Multiple Servlet- jsp
+2. Navigation
+3. Exposure of password prevented.
+4. Navigation ways 
+5. Collecting Query String or form Data
+6. Using RequestScope
+7. Sequring jsp's by keeping it in WEB-INF  
+ 
+-- servlet is responsible for communicate with service layer .
+
+
+
+
+Home.java (d)-- Welcome.jsp
+--(h)getLoginpage (= =)Login.java
+--(d)Login.jsp (= =)loginForm
+-- <form action= authenticate> 
+authenticate (= =) Authentication .java 
+
+
+
+==Deployment life cycle ==
+
+
+.java ---> .class , is done by compiler of java (i.e) javac  by sts.
+
+
+proj.bundling ---> .war files  throgh Ant BUilder ,Maven , Jenkins 
+
+
+.jsp --> .java  --> .class  by server 
+
+Server contains 2 parts 
+1. server 
+2. container
+
+	--server
+
+	--Container
+		its behaviour will not change in any server 
+		must abide by specification
+		contains jvm --> jvm pourpouse is to execute the .class file
+
+
+
+3 interface 
+	-- servlet
+	--ServletConfig
+	--serializable
+servlet 
+	this is called life cycle interface
+	--in this :
+		--init(ServiceConfig)
+		--service()
+		--destroy()
+
+class
+
+	--GenericServlet(Abstract)
+	--HttpServlet
+	--FtpServlet
+	--MyServlet     <-- my own class
+		
+GenericServlet(Abstract)
+		in this
+		--init() method is there 
+		--protocol independent 
+		---implements all 3 above interface (sevlet ,servletConfig ,serializable)
+
+
+
+
+HttpServlet
+	--doXXX()
+	--service()
+	--extends GenericServlet class
+FtpServlet
+	--extends GenericServlet class
+
+
+
+
+MyOwnServlet
+	--Dont override it may or may not gave you error so recommend to not to override
+		--init(ServletConfig)
+		--service
+	--Override
+		--init()
+		--destroy()
+		--doXXX()
+
+----this above is said best practice---
+
+
+
+===============================================
+
+Directory Structure
+
+	--ContextRoot(proj) (*)
+	--html/css/js/JQryLib
+	--WEB-INF(*)
+		--classes(*) : ALL .class file 
+		--lib(*)  : supportive jar files , drivers
+		--jsps
+
+
+
+--WebContent and build are in sts and ecclipse , but not shown while deployment
+
+-- this directoryStructure cannot change for any server 
+--classes hierarchy 
+--annotation 
+--.xml file cannot change for any server 
+
+-----------------------------------------------------
+
+// life cycle of methods 
+
+// use init(ServletConfig) : Its for Initialization  , it is a life cycle method 
+	//in this -->Initialization , Resource allocation are done here
+//init : It is for initialization and overriding
+//service() : this method is called on every request
+	//this method called do get , do post method  , 
+	//Controlling and transformation are also done here
+// destroy()  : this method ios called while  un-deploying the file
+	// Resource Deallocation 
+// Eager: Created at the time of starting the server consumes  memory resources right from beginning 
+	// normally used for servlet whic are always used by all the users.
+	//loadOnStartup is +ive
+	// Home , Login ,MainMenu
+//Lazy : created only when first request is come in
+	//Normally used for servlet which may be instantiated optionally .
+	// ListAllEmps , AddNewEmps 
+
+//Servlet API
+----------------------------------------------------
+context and config parameters 
+
+//The context parameter are accessible to all web components in an application
+	//Get them from ServletContext
+	//accessible to  -->Servlets, jsp ,Filters , Listner
+	//Declare common value like company Name,URLs of other applications .
+	<context-param>
+    <param-name>companyName</param-name>
+    <param-value>Capgemini Solutions</param-value>
+  </context-param>
+
+//The config parameters 
+	// Get them from ServletConfig (one object per serevlet/JSP
+	//Accessible to only a parent web component
+	//Not accessible to any other web component 
+	<init-param>
+  		<param-name>pageTitle</param-name>
+  		<param-value>Report on monthly salary paid</param-value>
+  	</init-param>
+//@WebServlet("/MyServlet01")
+
+
+-------------------------------------------------------
+
+
+
+<%-- 
+	Directives  <%@   %>
+		3 types of directive
+		--page :session ,import
+		--taglib : 
+		--include: 
+		
+	Declaration  <%!  %>
+		They are contents of class instanceFields ,Methods .		
+	Scriptlets : <% %>
+		Its a java code to be added inside service()
+	Expressions :
+		A single value to print
+	Template :
+		Its a HTML Part
+	Elements : <jsp: xxxxxxx>
+		examples are forward , include .
+		
+ --%>
+ 
+ <%--
+ 	Implicit Tags 
+ 	variable that are ready in jsp.java file
+ 		1. ServletConfig : application
+ 		2. ServletContext : context
+ 		3. HttpServletRequest :request
+ 		4. HttpServletResponse : response
+		5. HttpSession session
+		6. JspWriter out : Handle to response.
+		7. Page page : Like this
+		8. Page Context pageContext : Bundle of jsp Resources 
+		9.Exception exception : Refers to Exception 
+				Available on only those JSP for whome 
+				<%-- <%@ page isErrorPage =true %> --%>
+		
+ 
+
+explore it  
+Sticky session
+session management in clustured environment
+
+
+
+cookie
+urlRewriten
+hiddenFields
+
+--
+cookie -- it is an object which hold the string 
+cookie is of 2 types 
+		--session cookie --> managed by browser in its memory ,
+				--it does not contain "AGE"
+		--persistent cookie  --> stored on the disk , 
+				-- it contain "AGE"
+
+
+
+
+urlreWritten -- if cookie is blocked to the server
+
+
+session
+	Tracked using three ways
+		--cookies(session cookies not maiontained on disk but on memory)
+		--url ReWritten ( Each url on page is append with session id)
+		--Hidden field (not in use)
+
+	cookies are of 2 types 
+		--session cookies
+			--without age and stored in browser's memory
+		--persistent Cookies
+			-- with age and recorded on disk . age define the expiry of the cookie
+
+Session Api
+ (for Servlet)
+	interface HttpSession
+		Create session:
+			--request.getSession() or request.getSession(true)
+		get session reference
+			--HttpSession session =request.getSession()
+--HttpSession session =request.getSession(true)
+--HttpSession session =request.getSession(false)
+		kill session
+			--session.invalidate()
+
+  (for jsp)
+	By default each jsp creates a session if not existing
+	or reference of existing session
+	--Disable session creation:
+		--<%@ page session ="false">\	
+		--if forbid session creation and also jsp is deprived of a 'session'variable
+
+
+
+everytime 
+
+Servletcontext >session > request ----> (scope)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
